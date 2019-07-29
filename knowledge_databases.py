@@ -1,4 +1,4 @@
-from knowledge_model import Base, Knowledge
+from knowledge_model import Base, Food, Pilots
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -8,11 +8,24 @@ Base.metadata.create_all(engine)
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
-def add_article():
-	pass
+def add_article(name,year,age,airplane):
+	pilots = Pilots(
+	pilot_name=name,
+	experience=year,
+	age=age,
+	airplane=airplane)
+	session.add(pilots)
+	session.commit()
+
+add_article("max","good",55,"boeing 473")
+ 
+
 
 def query_all_articles():
-	pass
+	airways=session.query(
+		Pilots).all()
+	return airways
+
 
 def query_article_by_topic():
 	pass
@@ -25,3 +38,5 @@ def delete_all_articles():
 
 def edit_article_rating():
 	pass
+
+print(query_all_articles())
